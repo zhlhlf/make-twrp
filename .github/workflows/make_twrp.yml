@@ -85,7 +85,7 @@ jobs:
          lunch ${{ github.event.inputs.DEVICE_NAME }}
          make recoveryimage -j$(nproc --all)
 
-    - name: 移动镜像至zhlhlf
+    - name: 移动镜像至zhlhlf/
       run: |
          mkdir zhlhlf
          cp -r ./out/target/product/*/recovery.img zhlhlf/

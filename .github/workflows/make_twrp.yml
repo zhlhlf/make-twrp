@@ -84,8 +84,12 @@ jobs:
          export LC_ALL=C
          lunch ${{ github.event.inputs.DEVICE_NAME }}
          make recoveryimage -j$(nproc --all)
+
+    - name: 移动镜像至zhlhlf
+      run: |
          mkdir zhlhlf
-         mv ./out/target/product/*/recovery.img zhlhlf/
+         cp -r ./out/target/product/*/recovery.img zhlhlf/
+         ls zhlhlf
 
     - name: 上传twrp镜像至release
       uses: ncipollo/release-action@v1.8.6

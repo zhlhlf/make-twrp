@@ -89,7 +89,7 @@ jobs:
 
     - name: 上传twrp镜像至release
       uses: ncipollo/release-action@v1.8.6
-         with:
+      with:
            artifacts: $zhlhlf
            name: twrp
            tag: twrp-${{ github.run_number }}

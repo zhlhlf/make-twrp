@@ -18,7 +18,7 @@ on:
       DEVICE_BRANCH:
         description: 'DEVICE_BRANCH'
         required: true
-        default: 'android-13'
+        default: 'oplus-android-13'
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true

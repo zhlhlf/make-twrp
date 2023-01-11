@@ -69,6 +69,11 @@ jobs:
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}      
+    
+    - name: Set Swap Space
+      uses: pierotofy/set-swap-space@master
+      with:
+        swap-size-gb: 10
 
     - name: 构建镜像
       run: |
@@ -78,8 +83,7 @@ jobs:
          lunch ${{ github.event.inputs.DEVICE_NAME }}
          make recoveryimage -j$(nproc --all)        
          
-      
-    - name: Upload to Release
+    - name: 上传到 Release
       uses: softprops/action-gh-release@v1
       with:
         files: out/target/product/*/recovery.img

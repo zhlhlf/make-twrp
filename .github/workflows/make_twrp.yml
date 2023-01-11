@@ -84,7 +84,7 @@ jobs:
          export LC_ALL=C
          lunch ${{ github.event.inputs.DEVICE_NAME }}
          make recoveryimage -j$(nproc --all)
-         export zhlhlf=$(find ./out -name recovery.img)
+         export zhlhlf=$(find ./out/target/product -name recovery.img)
          echo $zhlhlf
 
     - name: 上传twrp镜像至release

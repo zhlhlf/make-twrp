@@ -84,13 +84,12 @@ jobs:
          export LC_ALL=C
          lunch ${{ github.event.inputs.DEVICE_NAME }}
          make recoveryimage -j$(nproc --all)        
-         
-    - name: 上传到 Release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: out/target/product/*/recovery.img
-        name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
-        tag_name: ${{ github.run_id }}
-        body: Recovery for ${{ github.event.inputs.DEVICE_NAME }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: 上传zhlhlf目录所有文件至 release
+      uses: ncipollo/release-action@v1.8.6
+         with:
+           artifacts: out/target/product/*/recovery.img
+           name: twrp
+           tag: twrp-${{ github.run_number }}
+           token: ${{ secrets.GITHUB_TOKEN }}
+           

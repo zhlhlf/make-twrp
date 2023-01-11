@@ -49,12 +49,6 @@ jobs:
         sudo bash scripts/setup/install_android_sdk.sh || echo '\n'
         sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
         sudo chmod a+x /usr/local/bin/repo
-
-    - name: 安装 OpenJDK
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'zulu'
-        java-version: '8'
               
     - name: 拉取源码
       run: |
@@ -67,6 +61,7 @@ jobs:
     - name: 拉取设备树
       run: |
         git clone ${{ github.event.inputs.DEVICE_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ${{ github.event.inputs.DEVICE_PATH }}
+        df -h /
    
     - name: ssh连接
       if: env.ssh == 'true'                

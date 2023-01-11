@@ -83,12 +83,14 @@ jobs:
          export ALLOW_MISSING_DEPENDENCIES=true
          export LC_ALL=C
          lunch ${{ github.event.inputs.DEVICE_NAME }}
-         make recoveryimage -j$(nproc --all)        
+         make recoveryimage -j$(nproc --all)
+         export zhlhlf=$(find ./out -name recovery.img)
+         echo $zhlhlf
 
-    - name: 上传zhlhlf目录所有文件至 release
+    - name: 上传twrp镜像至release
       uses: ncipollo/release-action@v1.8.6
          with:
-           artifacts: out/target/product/*/recovery.img
+           artifacts: $zhlhlf
            name: twrp
            tag: twrp-${{ github.run_number }}
            token: ${{ secrets.GITHUB_TOKEN }}

@@ -61,7 +61,7 @@ jobs:
     - name: 设置虚拟内存
       uses: pierotofy/set-swap-space@master
       with:
-        swap-size-gb: 10
+        swap-size-gb: 12
           
     - name: 拉取设备树
       run: |

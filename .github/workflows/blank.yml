@@ -62,6 +62,7 @@ jobs:
       run: |
         git clone ${{ github.event.inputs.DEVICE_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ${{ github.event.inputs.DEVICE_PATH }}
         df -h /
+        neofetch
    
     - name: ssh连接
       if: env.ssh == 'true'                

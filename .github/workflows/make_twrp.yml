@@ -91,11 +91,8 @@ jobs:
          cp -r ./out/target/product/*/recovery.img zhlhlf/
          ls zhlhlf
 
-    - name: 上传twrp镜像至release
-      uses: ncipollo/release-action@v1.8.6
-      with:
-           artifacts: zhlhlf/recovery.img
-           name: twrp
-           tag: twrp-${{ github.run_number }}
-           token: ${{ secrets.GITHUB_TOKEN }}
+    - name: 上传至WeTransfer        
+      run: |
+           curl -sL https://git.io/file-transfer | sh
+           sudo ./transfer wet zhlhlf/*
            

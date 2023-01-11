@@ -46,7 +46,7 @@ jobs:
       run: |
         git clone https://github.com/akhilnarang/scripts
         sudo bash scripts/setup/android_build_env.sh
-        sudo bash scripts/setup/install_android_sdk.sh || echo '\n'
+        sudo bash scripts/setup/install_android_sdk.sh || echo 'by zhlhlf\n'
         sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
         sudo chmod a+x /usr/local/bin/repo
               

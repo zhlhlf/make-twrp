@@ -1,0 +1,95 @@
+name: make twrp
+
+on:
+  workflow_dispatch:
+    inputs:
+      LIBRARY_URL:
+        description: 'LIBRARY_URL'
+        required: true
+        default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git'
+      LIBRARY_BRANCH:
+        description: 'LIBRARY_BRANCH'
+        required: true
+        default: 'twrp-12.1'
+      DEVICE_URL:
+        description: 'DEVICE_URL'
+        required: true
+        default: 'https://github.com/ApexLegend007/twrp_device_oneplus_lemonades'
+      DEVICE_BRANCH:
+        description: 'DEVICE_BRANCH'
+        required: true
+        default: 'android-13'
+      DEVICE_PATH:
+        description: 'DEVICE_PATH'
+        required: true
+        default: 'device/oneplus/lemonades'
+      DEVICE_NAME:
+        description: 'DEVICE_NAME'
+        required: true
+        default: 'twrp_lemonades-eng'
+        
+env:
+  ssh: true6
+
+jobs:
+ build:
+  runs-on: ubuntu-20.04
+
+  steps:
+    - name: Check Out
+      uses: actions/checkout@main
+      
+    - name: 打扫空间
+      uses: rokibhasansagar/slimhub_actions@main
+
+    - name: 配置环境
+      run: |
+        sudo apt update
+        sudo apt -y upgrade
+        sudo apt -y install gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib libc6-dev lib32ncurses5-dev x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc bc ccache lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libxml2 lzop pngcrush schedtool squashfs-tools imagemagick libbz2-dev lzma ncftp qemu-user-static libstdc++-10-dev python
+        sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
+        sudo chmod a+x /usr/local/bin/repo
+
+    - name: 安装 OpenJDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-version: '8'
+              
+    - name: 拉取源码
+      run: |
+        git config --global user.name "zhlhlf"
+        git config --global user.email "zhlhlf@gmail.com"
+        repo init --depth=1 -u ${{ github.event.inputs.LIBRARY_URL }} -b ${{ github.event.inputs.LIBRARY_BRANCH }}
+        repo sync -j$(nproc --all) --force-sync
+        rm -r .repo
+          
+    - name: 拉取设备树
+      run: |
+        git clone ${{ github.event.inputs.DEVICE_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ${{ github.event.inputs.DEVICE_PATH }}
+   
+    - name: ssh连接
+      if: env.ssh == 'true'                
+      uses: P3TERX/ssh2actions@v1.0.0
+      env:
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}      
+
+    - name: 构建镜像
+      run: |
+         source build/envsetup.sh
+         export ALLOW_MISSING_DEPENDENCIES=true
+         export LC_ALL=C
+         lunch ${{ github.event.inputs.DEVICE_NAME }}
+         make recoveryimage -j$(nproc --all)        
+         
+      
+    - name: Upload to Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
+        name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
+        tag_name: ${{ github.run_id }}
+        body: Recovery for ${{ github.event.inputs.DEVICE_NAME }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,4 +1,4 @@
-name: make twrp
+name: 构建twrp
 
 on:
   workflow_dispatch:

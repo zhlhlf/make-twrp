@@ -29,7 +29,7 @@ on:
         default: 'twrp_lemonades-eng'
         
 env:
-  ssh: true6
+  ssh: true
 
 jobs:
  build:

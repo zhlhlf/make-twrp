@@ -14,7 +14,7 @@ on:
       DEVICE_URL:
         description: 'DEVICE_URL'
         required: true
-        default: 'https://github.com/ApexLegend007/twrp_device_oneplus_lemonades'
+        default: 'https://github.com/zhlhlf/twrp_device_oneplus_lemonades'
       DEVICE_BRANCH:
         description: 'DEVICE_BRANCH'
         required: true

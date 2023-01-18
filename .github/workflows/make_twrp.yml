@@ -61,14 +61,14 @@ jobs:
           
     - name: 创建swap内存                
       run: |
-             export SWAP_FILE=$(swapon --show=NAME | tail -n 1)
-             sudo swapoff $SWAP_FILE
-             sudo rm $SWAP_FILE
-             sudo fallocate -l ${{ env.swap-size-gb }} $SWAP_FILE
-             sudo chmod 600 $SWAP_FILE
-             sudo mkswap $SWAP_FILE
-             sudo swapon $SWAP_FILE
-             free -h
+         export SWAP_FILE=$(swapon --show=NAME | tail -n 1)
+         sudo swapoff $SWAP_FILE
+         sudo rm $SWAP_FILE
+         sudo fallocate -l ${{ env.swap-size-gb }} $SWAP_FILE
+         sudo chmod 600 $SWAP_FILE
+         sudo mkswap $SWAP_FILE
+         sudo swapon $SWAP_FILE
+         free -h
           
     - name: 拉取设备树
       run: |
@@ -81,7 +81,6 @@ jobs:
       run: |
          sudo bash ssh.sh
          
-
     - name: 构建镜像
       run: |
          source build/envsetup.sh

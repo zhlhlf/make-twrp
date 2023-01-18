@@ -30,6 +30,7 @@ on:
         
 env:
   ssh: true
+  swap: true
 
 jobs:
  build:

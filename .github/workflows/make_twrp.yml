@@ -30,7 +30,7 @@ on:
         
 env:
   ssh: true
-  swap: 12G
+  swap-size-gb: 12G
 
 jobs:
  build:

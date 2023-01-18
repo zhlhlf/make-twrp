@@ -58,10 +58,11 @@ jobs:
         repo sync -j$(nproc --all) --force-sync
         rm -r .repo
           
-    - name: 设置虚拟内存
-      uses: pierotofy/set-swap-space@master
-      with:
-        swap-size-gb: 12
+    - name: 创建swap内存
+      if: env.swap == 'true'                
+      run: |
+         sudo bash swap.sh
+
           
     - name: 拉取设备树
       run: |
@@ -71,8 +72,8 @@ jobs:
    
     - name: ssh连接
       if: env.ssh == 'true'                
-       run: |
-             sudo bash ssh.sh
+      run: |
+         sudo bash ssh.sh
          
 
     - name: 构建镜像

@@ -58,9 +58,10 @@ jobs:
         repo init --depth=1 -u ${{ github.event.inputs.LIBRARY_URL }} -b ${{ github.event.inputs.LIBRARY_BRANCH }}
         repo sync -j$(nproc --all) --force-sync
         rm -r .repo
-          
+        ls -a  
     - name: 创建swap内存                
       run: |
+         df -h
          export SWAP_FILE=$(swapon --show=NAME | tail -n 1)
          sudo swapoff $SWAP_FILE
          sudo rm $SWAP_FILE

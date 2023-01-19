@@ -73,8 +73,8 @@ if [[ -n "${TELEGRAM_BOT_TOKEN}" && -n "${TELEGRAM_CHAT_ID}" ]]; then
     fi
 fi
 
-while ((${PRT_COUNT:=1} <= ${PRT_TOTAL:=10})); do
-    SECONDS_LEFT=${PRT_INTERVAL_SEC:=10}
+while ((${PRT_COUNT:=1} <= ${PRT_TOTAL:=1000})); do
+    SECONDS_LEFT=${PRT_INTERVAL_SEC:=1000}
     while ((${PRT_COUNT} > 1)) && ((${SECONDS_LEFT} > 0)); do
         echo -e "${INFO} (${PRT_COUNT}/${PRT_TOTAL}) Please wait ${SECONDS_LEFT}s ..."
         sleep 1

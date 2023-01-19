@@ -87,6 +87,10 @@ while ((${PRT_COUNT:=1} <= ${PRT_TOTAL:=1000})); do
     echo -e "TIPS: Run 'touch ${CONTINUE_FILE}' to continue to the next step."
     echo "-----------------------------------------------------------------------------------"
     PRT_COUNT=$((${PRT_COUNT} + 1))
+    if [[ -e ${CONTINUE_FILE} ]]; then
+        echo -e "${INFO} Continue to the next step."
+        exit 0
+    fi
 done
 
 while [[ -S ${TMATE_SOCK} ]]; do

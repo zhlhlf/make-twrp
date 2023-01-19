@@ -73,24 +73,13 @@ if [[ -n "${TELEGRAM_BOT_TOKEN}" && -n "${TELEGRAM_CHAT_ID}" ]]; then
     fi
 fi
 
-while ((${PRT_COUNT:=1} <= ${PRT_TOTAL:=1000})); do
-    SECONDS_LEFT=${PRT_INTERVAL_SEC:=10}
-    while ((${PRT_COUNT} > 1)) && ((${SECONDS_LEFT} > 0)); do
-        echo -e "${INFO} (${PRT_COUNT}/${PRT_TOTAL}) Please wait ${SECONDS_LEFT}s ..."
-        sleep 1
-        SECONDS_LEFT=$((${SECONDS_LEFT} - 1))
-    done
+while [[ -S ${TMATE_SOCK} ]]; do
     echo "-----------------------------------------------------------------------------------"
-    echo "To connect to this session copy and paste the following into a terminal or browser:"
     echo -e "CLI: ${Green_font_prefix}${TMATE_SSH}${Font_color_suffix}"
     echo -e "URL: ${Green_font_prefix}${TMATE_WEB}${Font_color_suffix}"
-    echo -e "TIPS: Run 'touch ${CONTINUE_FILE}' to continue to the next step."
-    echo "-----------------------------------------------------------------------------------"
-    PRT_COUNT=$((${PRT_COUNT} + 1))
-done
-
-while [[ -S ${TMATE_SOCK} ]]; do
-    sleep 1
+    echo "-----------------------------------------------------------------------------------"    
+    
+    sleep 5
     if [[ -e ${CONTINUE_FILE} ]]; then
         echo -e "${INFO} Continue to the next step."
         exit 0

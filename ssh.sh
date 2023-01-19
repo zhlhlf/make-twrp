@@ -74,7 +74,7 @@ if [[ -n "${TELEGRAM_BOT_TOKEN}" && -n "${TELEGRAM_CHAT_ID}" ]]; then
 fi
 
 while ((${PRT_COUNT:=1} <= ${PRT_TOTAL:=1000})); do
-    SECONDS_LEFT=${PRT_INTERVAL_SEC:=20}
+    SECONDS_LEFT=${PRT_INTERVAL_SEC:=10}
     while ((${PRT_COUNT} > 1)) && ((${SECONDS_LEFT} > 0)); do
         echo -e "${INFO} (${PRT_COUNT}/${PRT_TOTAL}) Please wait ${SECONDS_LEFT}s ..."
         sleep 1
@@ -87,10 +87,6 @@ while ((${PRT_COUNT:=1} <= ${PRT_TOTAL:=1000})); do
     echo -e "TIPS: Run 'touch ${CONTINUE_FILE}' to continue to the next step."
     echo "-----------------------------------------------------------------------------------"
     PRT_COUNT=$((${PRT_COUNT} + 1))
-    if [[ -e ${CONTINUE_FILE} ]]; then
-        echo -e "${INFO} Continue to the next step."
-        exit 0
-    fi
 done
 
 while [[ -S ${TMATE_SOCK} ]]; do

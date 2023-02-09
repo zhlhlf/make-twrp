@@ -29,7 +29,7 @@ on:
         default: 'twrp_lemonades-eng'
         
 env:
-  ssh: true6
+  ssh: true
   
 
 jobs:
@@ -73,9 +73,9 @@ jobs:
           
     - name: 拉取设备树
       run: |
-        git clone ${{ github.event.inputs.DEVICE_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ${{ github.event.inputs.DEVICE_PATH }}
         df -h /
         free -m
+#        git clone ${{ github.event.inputs.DEVICE_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ${{ github.event.inputs.DEVICE_PATH }}
    
     - name: ssh连接
       if: env.ssh == 'true'                

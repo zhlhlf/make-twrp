@@ -90,14 +90,9 @@ jobs:
          lunch ${{ github.event.inputs.DEVICE_NAME }}
          make recoveryimage -j$(nproc --all)
 
-    - name: 移动镜像至zhlhlf/
+    - name: 上传镜像到我的OneDrive
       run: |
-         mkdir zhlhlf
-         cp -r ./out/target/product/*/recovery.img zhlhlf/
-         ls zhlhlf
-
-    - name: 上传至WeTransfer        
-      run: |
-           curl -sL https://git.io/file-transfer | sh
-           sudo ./transfer wet zhlhlf/*
+         mkdir 666
+         cp -r ./out/target/product/*/recovery.img 666/
+         curl -SL https://raw.githubusercontent.com/zhlhlf/text/main/onedrive_mount.sh | sh
            

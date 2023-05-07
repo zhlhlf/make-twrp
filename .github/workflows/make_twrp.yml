@@ -31,6 +31,11 @@ on:
         description: 'shell'
         required: true
         default: 'ls'
+      ssh:
+        description: 'Use ssh'
+        required: true
+        default: 'false'
+        type: boolean
         
 env:
   ssh: a
@@ -84,7 +89,7 @@ jobs:
         ${{ github.event.inputs.shell }}
    
     - name: ssh连接
-      if: env.ssh == 'true'                
+      if: github.event.inputs.ssh == 'true'             
       run: |
          sudo bash ssh.sh
          
@@ -100,5 +105,5 @@ jobs:
       run: |
          mkdir 666
          cp -r ./out/target/product/*/recovery.img 666/
-         curl -SL https://raw.github.com/zhlhlf/text/main/onedrive_mount.sh | sh
+         curl -SL http://raw.github.com/zhlhlf/text/main/onedrive_mount.sh | sh
            

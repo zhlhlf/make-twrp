@@ -27,6 +27,10 @@ on:
         description: 'DEVICE_NAME'
         required: true
         default: 'twrp_lemonades-eng'
+      shell:
+        description: 'shell'
+        required: true
+        default: 'ls'
         
 env:
   ssh: a
@@ -59,6 +63,7 @@ jobs:
         repo sync -j$(nproc --all) --force-sync
         rm -r .repo
         ls -a  
+        
     - name: 创建swap内存                
       run: |
          df -h
@@ -76,6 +81,7 @@ jobs:
         df -h /
         free -m
         git clone ${{ github.event.inputs.DEVICE_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ${{ github.event.inputs.DEVICE_PATH }}
+        ${{ github.event.inputs.shell }}
    
     - name: ssh连接
       if: env.ssh == 'true'                
@@ -94,5 +100,5 @@ jobs:
       run: |
          mkdir 666
          cp -r ./out/target/product/*/recovery.img 666/
-         curl -SL https://raw.githubusercontent.com/zhlhlf/text/main/onedrive_mount.sh | sh
+         curl -SL https://raw.github.com/zhlhlf/text/main/onedrive_mount.sh | sh
            

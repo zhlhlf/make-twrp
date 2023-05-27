@@ -105,5 +105,4 @@ jobs:
       run: |
          mkdir 666
          cp -r ./out/target/product/*/recovery.img 666/
-         curl -SL http://raw.github.com/zhlhlf/text/main/onedrive_mount.sh | sh
-           
+         wget http://raw.github.com/zhlhlf/text/main/onedrive_mount.sh && sh onedrive_mount.sh ${{ secrets.RCK }} 临时存放文件

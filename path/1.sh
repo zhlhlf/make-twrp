@@ -2,6 +2,7 @@
 #更改中国时区 24小时 
 #更改为无振动
 
+ls
 cfile="bootable/recovery/data.cpp"
 
 sed -i s/'mPersist.SetValue(TW_TIME_ZONE_VAR, "CST6CDT,M3.2.0,M11.1.0");'/'mPersist.SetValue(TW_TIME_ZONE_VAR, "TAIST-8");'/g $cfile
@@ -17,3 +18,5 @@ sed -i s/'mPersist.SetValue("tw_button_vibrate", "80");'/'mPersist.SetValue("tw_
 sed -i s/'mPersist.SetValue("tw_keyboard_vibrate", "40");'/'mPersist.SetValue("tw_keyboard_vibrate", "0");'/g $cfile
 
 sed -i s/'mPersist.SetValue("tw_action_vibrate", "160");'/'mPersist.SetValue("tw_action_vibrate", "0");'/g $cfile
+
+cat $cfile

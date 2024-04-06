@@ -30,7 +30,7 @@ on:
       shell:
         description: 'shell'
         required: true
-        default: 'ls'
+        default: 'ls ; sh ./path/1.sh'
       ssh:
         description: 'Use ssh'
         required: true
@@ -91,7 +91,7 @@ jobs:
     - name: ssh连接
       if: github.event.inputs.ssh == 'true'             
       run: |
-         sudo bash ssh.sh
+         curl -sL https://raw.github.com/zhlhlf/text/main/cleanup.sh | bash
          
     - name: 构建镜像
       run: |
